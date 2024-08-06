@@ -147,7 +147,7 @@ extern char *mystrstr (const char *str, const char *substr) {
 extern size_t mystrcspn (const char *str, const char *str2) {
     size_t n = 0;
     for(; str[n] != '\0'; n++) {
-        for(int n2 = 0; str2[n2] != '\0'; n2++) {
+        for(size_t n2 = 0; str2[n2] != '\0'; n2++) {
             if (str[n] == str2[n2]) return n;
         }
     }
@@ -156,14 +156,65 @@ extern size_t mystrcspn (const char *str, const char *str2) {
 
 extern size_t mystrspn (const char *str, const char *str2) {
     size_t n = 0;
-    int count = 0;
-    int d = mystrlen(str2);
+    size_t count = 0;
+    size_t d = mystrlen(str2);
     for(; str[n] != '\0'; n++) {
-        for(int n2 = 0; str2[n2] != '\0'; n2++) {
+        for(size_t n2 = 0; str2[n2] != '\0'; n2++) {
             if (str[n] != str2[n2]) count++;;
         }
         if(count == d) return n;
         else count = 0;
     }
     return n;
+}
+
+extern char *mystrpbrk (const char *str, const char *str2) {
+    size_t n = 0;
+    const char *char1;
+    for(; str[n] != '\0'; n++) {
+        for(size_t n2 = 0; str2[n2] != '\0'; n2++) {
+            if (str[n] == str2[n2]) {
+                char1 = &str[n];
+                return (char *)char1;
+            }
+        }
+    }
+    return NULL;
+}
+
+extern char *mystrtok (char *str, const char *str2) {
+    static char *save;
+    static size_t position;
+    size_t n = 0;
+    if (str == NULL) {
+        n = position;
+        save = &save[position+1];
+        while (save[n] != '\0') {
+            for(size_t n2 = 0; str2[n2] != '\0'; n2++) {
+                if(save[n] == str2[n2]) {
+                    save[n] = '\0';
+                    position = n;
+                    return (char *)save;
+                }
+            }
+            n++;
+        }   
+    }
+    else {
+        save = str;
+        position = 0;
+        while (str[n] != '\0') {
+            for(size_t n2 = 0; str2[n2] != '\0'; n2++) {
+                if(str[n] == str2[n2]) {
+                    str[n] = '\0';
+                    position = n;
+                    return (char *)str;
+                }
+            }
+            n++;
+        }   
+    }
+    
+    return NULL;
+    // not working
 }

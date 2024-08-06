@@ -12,3 +12,5 @@ extern char *mystrrchr (const char *str, int b);
 extern char *mystrstr (const char *str, const char *substr);
 extern size_t mystrcspn (const char *str, const char *str2);
 extern size_t mystrspn (const char *str, const char *str2);
+extern char *mystrpbrk (const char *str, const char *str2);
+extern char *mystrtok (char *str, const char *str2);
